@@ -1,0 +1,57 @@
+<script src="/javascripts/helper.js"></script>
+<script src="/javascripts/account.js"></script>
+<script src="/javascripts/register.js"></script>
+
+
+<div class="container text-left" style="margin-top:5rem; margin-bottom:5rem;">
+  <div class="row justify-content-left">
+    <div class="col-sm-6" style="margin-top: 10%;">
+      <h1 class="display-4 text-center text-white">Unete a nosotros</h1>
+      <p class="lead text-center text-white">
+        Al hacerlo podrás contar con nuevas opciones <br />
+        siendo totalmente gratis
+      </p>
+    </div>
+
+    <div class="col-sm-1"></div>
+
+    <div class="col-sm-4">
+      <form id="crearCuenta">
+        <div class="form-group aling">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputNombre" class="text-white">Nombre</label>
+              <input type="text" class="form-control" id="inputNombre" placeholder="" />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputApellido" class="text-white">Apellido</label>
+              <input type="text" class="form-control" id="inputApellido" placeholder="" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group aling">
+          <label for="inputNickname" class="text-white">Nombre de usuario</label>
+          <input type="text" class="form-control" id="InputNick" aria-describedby="emailHelp" placeholder="" />
+          <small id="emailHelp" class="form-text text-muted">Este nombre no será visible por los demás</small>
+        </div>
+        <div class="form-group aling">
+          <label for="inputEmail" class="text-white">Dirección de correo electronico</label>
+          <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="" />
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="text-white">Contraseña</label>
+          <input type="password" class="form-control" id="inputPassword" placeholder="" />
+          <small id="passwordHelp" class="form-text text-muted">Nunca compartas tu contraseña con nadie.</small>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="checkeoTerminos" />
+          <label class="form-check-label" for="exampleCheck1">
+            <small id="passwordHelp" class="form-text text-muted">
+              Acepto los términos de servicio, política de privacidad y
+              política de cookies</small></label>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Registrarme</button>
+      </form>
+    </div>
+  </div>
+</div>
