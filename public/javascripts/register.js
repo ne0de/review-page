@@ -1,43 +1,29 @@
-$(document).ready(function () {
-    getAccounts();
+function registerNewAccount(){
+    let newUser = {
+        name: $("#inputNombre").val(),
+        surname: $("#inputApellido").val(),
+        password: $("#inputPassword").val(),
+        nick: $("#InputNick").val(),
+        email: $("#inputEmail").val()
+    };
 
-    $('#crearCuenta').on('submit', function (event) {
-        event.preventDefault();
-
-        // Guarda los datos en un array
-        let datos = [];
-        datos.push($("#inputNombre").val());    //0
-        datos.push($("#inputApellido").val());  //1
-        datos.push($("#inputPassword").val());  //2
-        datos.push($("#InputNick").val());      //3
-        datos.push($("#inputEmail").val());     //4
-
-        // Verifica que todos los campos no sean nulos
-        
-        for (var i = 0; i < 5; i++) {
-            if (voidText(datos[i]))
-                return alert("Rellena todos los campos")
+    $.ajax({
+        url: 'http://localhost:3000/account',
+        type: 'POST',
+        data: newUser,
+        success: resultado => {
+            alert("Te has registrado correctamente")
+            location.reload();
+        },
+        error: error => {
+            alert("Ya existe la cuenta");
         }
+    });
+}
 
-        // Verifica la existencia de la cuenta mediante el nickname y email
-        if (existAccount(datos[3], datos[4]) == 0) {
-            $.ajax({
-                url: 'http://localhost:3000/account',
-                type: 'POST',
-                data: {
-                    id: Object.keys(accounts).length + 1,
-                    name: datos[0],
-                    surname: datos[1],
-                    password: datos[2],
-                    nickname: datos[3],
-                    email: datos[4],
-                },
-                success: resultado => {
-                    alert("Te has registrado correctamente")
-                    location.reload();
-                }
-            });
-        } else
-            alert("ya existe esa cuenta");
+$(document).ready(function() {
+    $('#crearCuenta').on('submit', event => {
+        event.preventDefault();
+        registerNewAccount();
     });
 });
