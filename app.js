@@ -4,6 +4,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var exphbs  = require('express-handlebars');
 
+const db = require("./models");
+
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 

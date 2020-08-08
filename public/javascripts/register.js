@@ -8,7 +8,7 @@ function registerNewAccount(){
     };
 
     $.ajax({
-        url: 'http://localhost:3000/account',
+        url: 'http://localhost:3000/user',
         type: 'POST',
         data: newUser,
         success: resultado => {
@@ -22,8 +22,18 @@ function registerNewAccount(){
 }
 
 $(document).ready(function() {
+
+
     $('#crearCuenta').on('submit', event => {
         event.preventDefault();
-        registerNewAccount();
+        $.ajax({
+            url: 'http://localhost:3000/user',
+            type: 'GET',
+            success: resultado =>{
+                console.log(resultado);
+            }
+        });
+
+        //registerNewAccount();
     });
 });
