@@ -1,10 +1,7 @@
 function registerNewAccount(){
     let newUser = {
-        name: $("#inputNombre").val(),
-        surname: $("#inputApellido").val(),
-        password: $("#inputPassword").val(),
-        nick: $("#InputNick").val(),
-        email: $("#inputEmail").val()
+        nickname: $("#InputNick").val(),
+        password: $("#inputPassword").val()
     };
 
     $.ajax({
@@ -26,14 +23,6 @@ $(document).ready(function() {
 
     $('#crearCuenta').on('submit', event => {
         event.preventDefault();
-        $.ajax({
-            url: 'http://localhost:3000/user',
-            type: 'GET',
-            success: resultado =>{
-                console.log(resultado);
-            }
-        });
-
-        //registerNewAccount();
+        registerNewAccount();
     });
 });
