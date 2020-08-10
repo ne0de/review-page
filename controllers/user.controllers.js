@@ -1,4 +1,5 @@
 const db = require("../models");
+const app = require("../app");
 const User = db.User;
 const Op = db.Sequelize.Op;
 
@@ -10,26 +11,15 @@ exports.showLogin = (req, res) => {
     res.render('user/login');
 };
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     const newAccount = req.body;
-
-    User.create(newAccount)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(error => {
-        res.status(500).send({
-          message:
-            error.message || "Hubo un error al intentar crear al usuario."
-        });
-      });
+    await User.create(newAccount);
+    res.sendStatus(200);
   };
 
 exports.findAll = async (req, res) => {
     let result = await User.findAll();
-    res.send({
-        response : result
-    });
+    res.sendStatus(200);
 };
 
 exports.findOne = (req, res) => {
