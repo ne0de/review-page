@@ -1,20 +1,17 @@
 module.exports = (sequelize, Sequelize) => {
-
-    const User = sequelize.define("user", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+    const User = sequelize.define("user",
+        {
+            id: {
+                type: Sequelize.INTEGER,
+                primaryKey: true,
+                autoIncrement: true,
+            },
+            nickname: Sequelize.STRING,
+            password: Sequelize.STRING,
         },
-        nickname: {
-            type: Sequelize.STRING,
-        },
-        password: {
-            type: Sequelize.STRING
+        {
+            freezeTableName: true,
         }
-    },{
-        freezeTableName: true
-    }
     );
-    return User;
+  return User;
 };
