@@ -1,5 +1,6 @@
 const db = require("../models");
 const app = require("../app");
+const userReviewsDb = require("../models/userReviews.db");
 const User = db.User;
 const Op = db.Sequelize.Op;
 
@@ -13,13 +14,22 @@ exports.showLogin = (req, res) => {
 
 exports.create = async (req, res) => {
     const newAccount = req.body;
-    await User.create(newAccount);
-    res.sendStatus(200);
+    
+    var exist = await User.findOne({
+        where: { nickname: newAccount.nickname }
+    });
+
+    if(exist == null){
+        await User.create(newAccount);
+        res.send("Cuenta registrada con exito")
+    }else
+        res.status(403).send("Ya existe un usuario con ese nick");
   };
 
 exports.findAll = async (req, res) => {
     let result = await User.findAll();
-    res.sendStatus(200);
+    res.send(result);
+    //res.sendStatus(200);
 };
 
 exports.findOne = (req, res) => {
