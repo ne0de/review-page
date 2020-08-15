@@ -12,6 +12,18 @@ exports.showLogin = (req, res) => {
     res.render('user/login');
 };
 
+exports.showProfile = async (req, res) => {
+    const query = await User.findOne({
+        where: { id: req.params.id }
+    });
+    const account = query.dataValues;
+
+    if(account == null)
+        res.status(403).send('No existe usuario registrado con esa id');
+    else
+        res.render('user/profile', { account });
+}
+
 exports.create = async (req, res) => {
     const newAccount = req.body;
     
