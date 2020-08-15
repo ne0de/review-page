@@ -11,4 +11,6 @@ router.get('/login', controller.showLogin);
 
 router.get('/register', controller.showRegister);
 
+router.get('/profile/:id', controller.showProfile);
+
 module.exports = router;
