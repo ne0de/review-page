@@ -6,11 +6,14 @@ module.exports = (sequelize, Sequelize) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
+            name: Sequelize.STRING,
+            surname: Sequelize.STRING,
             nickname: Sequelize.STRING,
             password: Sequelize.STRING,
+            email: Sequelize.STRING,
         },
         {
-            freezeTableName: true,
+            freezeTableName: true
         }
     );
   return User;
