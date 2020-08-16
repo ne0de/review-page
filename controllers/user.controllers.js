@@ -16,19 +16,26 @@ exports.showProfile = async (req, res) => {
     const query = await User.findOne({
         where: { id: req.params.id }
     });
-    const account = query.dataValues;
-
-    if(account == null)
+    if(query == null)
         res.status(403).send('No existe usuario registrado con esa id');
-    else
+    else{
+        const account = query.dataValues;
         res.render('user/profile', { account });
+    }
 }
 
 exports.create = async (req, res) => {
-    const newAccount = req.body;
-    
+    const newAccount = req.body;    
+
+    //SELECT * FROM user WHERE nickname = newAccount.nickame OR email = newAccount.email LIMIT 1
     var exist = await User.findOne({
-        where: { nickname: newAccount.nickname }
+        limit: 1,
+        where: { 
+            [Op.or]: [
+                { nickname: newAccount.nickname },
+                { email: newAccount.email }
+            ]
+        }
     });
 
     if(exist == null){
@@ -36,7 +43,7 @@ exports.create = async (req, res) => {
         res.send("Cuenta registrada con exito")
     }else
         res.status(403).send("Ya existe un usuario con ese nick");
-  };
+};
 
 exports.findAll = async (req, res) => {
     let result = await User.findAll();
