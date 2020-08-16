@@ -4,4 +4,7 @@ const controller = require("../controllers/review.controllers");
 
 router.get('/', controller.findAll);
 
+router.get('/create', controller.showCreate);
+
+
 module.exports = router;
