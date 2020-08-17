@@ -18,6 +18,11 @@ exports.showProfile = async (req, res) => {
     res.render('user/profile', { account });
 }
 
+exports.showEditProfile = async (req, res) => {
+    const account = req.user;
+    res.render('user/edit', { account });
+}
+
 exports.isAuthenticated = (req, res, next) => {
     if(req.isAuthenticated())
         return next();
@@ -44,7 +49,8 @@ exports.createAccount = async (values) => {
         surname: values.surname,
         nickname: values.nickname,
         password: values.password,
-        email: values.email
+        email: values.email,
+        description: values.description
     });
 }
 
@@ -58,4 +64,32 @@ exports.existAccount = async (account) => {
             ]
         }
     });
+};
+
+exports.editProfile = async (req, res) => {
+    const account = req.user;
+    const newValues = req.body;
+    
+    if(!newValues.name)
+        newValues.name = account.name;
+
+    if(!newValues.surname)
+        newValues.surname = account.surname;
+    
+    if(!newValues.description)
+        newValues.description = account.description;
+
+    if(!newValues.avatar)
+        newValues.avatar = account.avatar;
+    
+    await User.update({ 
+        name: newValues.name,
+        surname: newValues.surname,
+        description: newValues.description,
+        avatar: newValues.avatar
+    },{
+        where: {id: account.id}
+    });
+    
+    res.sendStatus(200);
 };
