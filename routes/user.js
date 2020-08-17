@@ -26,6 +26,10 @@ router.post('/login', passport.authenticate('login',
 
 router.get('/profile', controller.isAuthenticated, controller.showProfile);
 
+router.get('/edit', controller.isAuthenticated, controller.showEditProfile);
+
+router.put('/edit', controller.isAuthenticated, controller.editProfile);
+
 router.get('/salir', (req, res) => {
     req.logout();
     res.redirect('/');
