@@ -1,8 +1,9 @@
 const db = require("../models");
 const app = require("../app");
-const userReviewsDb = require("../models/userReviews.db");
 const User = db.User;
 const Op = db.Sequelize.Op;
+
+/* Routes */
 
 exports.showRegister = (req, res) => {
     res.render('user/register');
@@ -13,60 +14,48 @@ exports.showLogin = (req, res) => {
 };
 
 exports.showProfile = async (req, res) => {
-    const query = await User.findOne({
-        where: { id: req.params.id }
-    });
-    if(query == null)
-        res.status(403).send('No existe usuario registrado con esa id');
-    else{
-        const account = query.dataValues;
-        res.render('user/profile', { account });
-    }
+    const account = req.user;
+    res.render('user/profile', { account });
 }
 
-exports.create = async (req, res) => {
-    const newAccount = req.body;    
+exports.isAuthenticated = (req, res, next) => {
+    if(req.isAuthenticated())
+        return next();
+    res.redirect('/');
+}
 
-    //SELECT * FROM user WHERE nickname = newAccount.nickame OR email = newAccount.email LIMIT 1
-    var exist = await User.findOne({
+/* Database */
+
+exports.findAccountById = async (id) => {
+    return await User.findOne({ where: 
+        { id : id } 
+    });
+}
+
+exports.findAccountByNick = async (nickname) => {
+    return await User.findOne({ where: 
+        { nickname : nickname } 
+    });
+}
+
+exports.createAccount = async (values) => {
+    return newUser = await User.create({ 
+        name: values.name,
+        surname: values.surname,
+        nickname: values.nickname,
+        password: values.password,
+        email: values.email
+    });
+}
+
+exports.existAccount = async (account) => {
+    return await User.findOne({
         limit: 1,
         where: { 
             [Op.or]: [
-                { nickname: newAccount.nickname },
-                { email: newAccount.email }
+                { nickname: account.nickname },
+                { email: account.email }
             ]
         }
     });
-
-    if(exist == null){
-        await User.create(newAccount);
-        res.send("Cuenta registrada con exito")
-    }else
-        res.status(403).send("Ya existe un usuario con ese nick");
-};
-
-exports.findAll = async (req, res) => {
-    let result = await User.findAll();
-    res.send(result);
-    //res.sendStatus(200);
-};
-
-exports.findOne = (req, res) => {
-  
-};
-
-exports.update = (req, res) => {
-  
-};
-
-exports.delete = (req, res) => {
-  
-};
-
-exports.deleteAll = (req, res) => {
-  
-};
-
-exports.findAllPublished = (req, res) => {
-  
 };

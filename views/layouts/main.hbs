@@ -1,7 +1,6 @@
 <html lang="en">
 
 <head>
-
     <!-- Custom main css -->
     <link rel="stylesheet" href="/stylesheets/main.css">
 
@@ -37,21 +36,31 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/review/popular">Populares</a>
                 </li>
+                {{#if login}}
                 <li class="nav-item">
                     <a class="nav-link" href="/review/create">Crear</a>
                 </li>
+                {{/if}}
             </ul>
         </div>
 
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
-                <a href="/user/login" class="btn btn-outline-success mr-2 text-white">Accede</a>
-                <a href="/user/register" class="btn btn-outline-info text-white">Regístrate</a>
+                {{#if login}}
+                    <a href="/user/profile" class="btn btn-outline-success mr-2 text-white">Perfil</a>
+                    <a href="/user/salir" class="btn btn-outline-danger mr-2 text-white">Salir</a>
+                {{else}}
+                    <a href="/user/login" class="btn btn-outline-success mr-2 text-white">Accede</a>
+                    <a href="/user/register" class="btn btn-outline-info text-white">Regístrate</a>
+                {{/if}}
+
             </ul>
         </div>
     </nav>
 
-    <div class="container mt-3 d-flex justify-content-center">
+    {{>error}}
+        
+    <div class="container">
         {{{body}}}
     </div>
 
