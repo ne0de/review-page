@@ -21,7 +21,8 @@ require('./passport/authenticator');
 app.engine('hbs', exphbs({
     defaultLayout: 'main',
     partialsDir: __dirname + '/views/partials',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: require('./lib/helpers')
 }));
 app.set('view engine', 'hbs');
 
