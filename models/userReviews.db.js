@@ -9,15 +9,15 @@ module.exports = (sequelize, Sequelize) => {
             reviewId: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'review', 
-                    key: 'id',
+                    model: 'review',
+                    key: 'id'
                 }
             },
             userId: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'user', 
-                    key: 'id',
+                    model: 'user',
+                    key: 'id'
                 }
             },
         },

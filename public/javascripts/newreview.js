@@ -3,20 +3,34 @@ $(document).ready(function(){
     $(".text-area").attr("maxlength", 500)
 
     $('.text-area').bind('input propertychange', function() {
-        chars = $(this).val().length;
-        opinion = $(this).val();
-        $('#maxChars').text(chars + '/500');
-        if(chars == 500)
+        $('#maxChars').text($(this).val().length + '/500');
+        if($(this).val().length == 500)
             $('#maxChars').append('<a class = "font-italic text-danger"> Llegaste al máximo de carácteres! </a>'); 
     });
 
     $('#botonJuego').find('a').click(function(e){
         e.preventDefault();
-        nameGame = $(this).text();
-        $('#btnGameSelected').text(nameGame);
-        gameSelected = games.filter(function(game){
-            return game.nombre == nameGame;
-        });
+        idgame = $('#botonJuego').find('#gameId').text();
+        $('#btnGameSelected').text($(this).text());
+    })
+
+    /* send data */
+    $('#send').click(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '/review',
+            type: 'POST',
+            error: result => {
+                console.log(result);
+            },
+            data: {
+                gameId: $('#botonJuego').find('#gameId').text(),
+                review: $('.text-area').val()
+            },
+            success: result => {
+                console.log(result);
+            },
+        })
     })
 });
 

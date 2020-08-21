@@ -18,3 +18,13 @@
     outline: 0;
     width: 20%;
 }
+
+.dropdown-menu a:hover {
+    background-color: #00336e;
+}
+
+.scrollable-menu{
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}

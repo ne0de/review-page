@@ -1,0 +1,33 @@
+<form class="container w-50" action="/games" method="POST">
+    <div class="form-group">
+        <label class="text-white">Nombre del juego</label>
+        <input type="text" class="form-control" name="name" placeholder="Fall Guys">
+    </div>
+    <div class="form-group">
+        <label class="text-white">Desarrollador</label>
+        <input type="text" class="form-control" name="developer" placeholder="Erick quispe">
+    </div>
+    <div class="form-group">
+        <label class="text-white">Fecha de lanzamiento</label>
+        <input type="text" class="form-control" name="release" placeholder="YYYY-MM-DD HH:MM:SS">
+    </div>
+    <div class="form-group">
+        <label class="text-white">Género</label>
+        <input type="text" class="form-control" name="genre" placeholder="Acción..">
+    </div>
+    <div class="form-group">
+        <label class="text-white">Idioma/s</label>
+        <input type="text" class="form-control" name="languague" placeholder="Español e Inglés">
+    </div>
+        <div class="form-group">
+        <label class="text-white">Cooperativo?</label>
+        <input type="text" class="form-control" name="coop" placeholder="0 = no, 1 = si">
+    </div>
+    <div class="form-group">
+        <label class="text-white">Descripción adicional</label>
+    <textarea class="form-control" name="description" rows="3"></textarea>
+  </div>
+  <div class="d-flex justify-content-center mt-5">
+  <button type="submit" class="btn btn-primary">Enviar datos</button>
+  </div>
+</form>

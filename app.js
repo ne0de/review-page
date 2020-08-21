@@ -12,6 +12,7 @@ const db = require("./models");
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var reviewRouter = require('./routes/review');
+var gamesRouter = require('./routes/games');
 
 var app = express();
 
@@ -57,5 +58,6 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/review', reviewRouter);
+app.use('/games', gamesRouter);
 
 module.exports = app;
