@@ -52,6 +52,8 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
+    if(req.isAuthenticated())
+        res.locals.nickname = req.user.nickname;
     next();
 });
 
