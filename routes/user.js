@@ -24,6 +24,8 @@ router.post('/login', passport.authenticate('login',
     }
 ));
 
+router.get('/profile/:id', controller.verifyProfile, controller.showProfileById);
+
 router.get('/profile', controller.isAuthenticated, controller.showProfile);
 
 router.get('/edit', controller.isAuthenticated, controller.showEditProfile);

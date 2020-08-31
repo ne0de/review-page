@@ -5,10 +5,6 @@
 
     <div class="col-md-4">
       <img src="{{account.avatar}}" class="card-img" alt="wow">
-      <div class="text-center">
-        <button onClick="window.location='edit';" class="btn btn-outline-primary text-white mt-3 mr-3">Editar mi
-          perfil</button>
-      </div>
     </div>
 
     <div class="col-md-8">
@@ -32,8 +28,7 @@
 {{else}}
 
 <div class="d-flex justify-content-center align-items">
-  <h3 class="text-white display-5 pr-3">No tienes reseñas</h3> <a class="btn btn-outline-primary text-white"
-    href="/review/create">Haz clic aquí para crear una</a>
+  <h3 class="text-white display-5 pr-3">El usuario no ha hecho ninguna reseña todavia</h3>
 </div>
 {{/if}}
 
@@ -55,10 +50,7 @@
         </div>
         <div class="d-flex justify-content-center mt-3">
           <button class="btn btn-outline-primary mr-3" type="button">Ver reseña ></button>
-          <button id="delete" class="btn btn-outline-danger mr-3" type="button">Eliminar</button>
         </div>
-
-
       </div>
     </div>
     {{/each}}

@@ -4,30 +4,39 @@
 <div class="d-flex flex-column">
 
     <div class="p-3">
-        <h1 class="display-4 text-white text-center">Crea tu propia reseña</h1>
+        <h1 class="display-4 text-white text-center pb-3">Crea tu propia reseña</h1>
         <p class="display-7 text-muted text-center">
             La reseña se publicará con tu nombre de usuario y será pública para
             todos los usuarios de la comunidad. <br />
-            Acuerdate que puedes remover la reseña y modificarla.
+            Acordate que puedes remover la reseña.
         </p>
-        <div id="botonJuego" class="pb-5 d-flex justify-content-center">
+
+        <form class="container pb-3" style="width: 30%;">
+            <div class="form-group mt-4 text-center">
+                <label class="text-muted">Escribe el titulo</label>
+                <input type="text" class="text-center form-control bg-transparent text-white border border-primary"
+                    id="tittle">
+            </div>
+        </form>
+
+        <div class="p-1 w-100">
+            <div class="form-group w-100 d-flex justify-content-center">
+                <textarea class="text-area" placeholder="¿Qué opinas del juego?"></textarea>
+            </div>
+            <p class="display-7 text-muted text-center">Carácteres actuales <span id="maxChars"> 0/500</span> </p>
+        </div>
+
+        <div id="botonJuego" class="d-flex justify-content-xl-end" style="width: 90%;">
             <button id="btnGameSelected" class="btn bg-transparent text-white dropdown-toggle bg-primary" type="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Selecciona el juego
             </button>
             <div id="listaJuegos" class="dropdown-menu scrollable-menu bg-transparent border border-primary ml-2">
                 {{#each games}}
-                <a id="gameId" hidden>{{dataValues.id}}</a>
                 <a class="dropdown-item text-white" href=""><img class="mr-3" src="{{dataValues.image}}" srcset=""
-                        width="30px" height="30px"> {{dataValues.name}}</a>
+                        width="30px" height="30px"> <span hidden>{{dataValues.id}}</span> {{dataValues.name}}</a>
                 {{/each}}
             </div>
         </div>
-    </div>
-    <div class="p-1 w-100">
-        <div class="form-group w-100 d-flex justify-content-center">
-            <textarea class="text-area" placeholder="¿Qué opinas del juego?"></textarea>
-        </div>
-        <p class="display-7 text-muted text-center">Carácteres actuales <span id="maxChars"> 0/500</span> </p>
     </div>
 
     <div class="" style="margin-bottom: 10%; margin-top: 5%;">

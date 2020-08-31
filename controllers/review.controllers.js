@@ -1,7 +1,9 @@
 const db = require("../models");
 const Review = db.Review;
 const Games = db.Games;
+const User = db.User;
 const UserReview = db.UserReview;
+const GameReview = db.GameReview;
 
 exports.showCreate = async (req, res) => {
     const games = await Games.findAll();
@@ -11,26 +13,49 @@ exports.showCreate = async (req, res) => {
 exports.newReview = async (req, res) => {
     const account = req.user;
     const values = req.body;
-    if(values.review == 0)
+    if(values.review == 0 || values.title == 0 || !values.gameId)
         res.sendStatus(403);
     else{
         console.log(values);
-        const { dataValues } = await Review.create({ description: values.review });
-        await UserReview.create({
+        const { dataValues } = await Review.create({ 
+            title: values.title,
+            description: values.review
+        });
+        const newUserReview = await UserReview.create({
             userId: account.id,
             reviewId: dataValues.id
-        })
+        });
+        const newGameReview = await GameReview.create({
+            gameId: values.gameId,
+            reviewId: dataValues.id
+        });
         //console.log(newReview);
         console.log(dataValues);
+        console.log(newUserReview);
         res.sendStatus(200);
     }
 }
 
-exports.findAll = async (req, res) => { 
-    const reviews = await Review.findAll();
-    console.log(reviews);
-    if(reviews == 0)
-        res.render('review/all', { error: "No hay reseñas registradas" });
-    else
-        res.send(reviews);
+exports.showAll = async (req, res) => { 
+    const allReviews = await Review.findAll({
+        raw: true,
+        nest: true,
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        include: [
+            {
+                model: User,
+                as: "users",
+                attributes: ['id', 'name', 'surname', 'avatar']
+            },
+            {
+                model: Games,
+                as: "games",
+                attributes: ['id', 'name', 'image']
+            }
+        ]
+    });
+    console.log(allReviews);
+    res.render('review/all', {allReviews });
 };

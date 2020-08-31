@@ -6,6 +6,7 @@ module.exports = (sequelize, Sequelize) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
+            title: Sequelize.STRING,
             description: Sequelize.STRING,
             likes: {
                 type: Sequelize.INTEGER,

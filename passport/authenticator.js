@@ -7,8 +7,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    const query = await controller.findAccountById(id);
-    const account = query.dataValues;
+    const account = await controller.findAccountById(id);
     done(null, account);
 });
 

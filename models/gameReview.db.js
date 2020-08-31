@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const UserReview = sequelize.define("user_review",
+    const GameReview = sequelize.define("game_review",
         {   },
         {
             freezeTableName: true,
             timestamps: false
         }
     );
-  return UserReview;
+  return GameReview;
 };

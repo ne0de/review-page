@@ -10,9 +10,8 @@ $(document).ready(function(){
 
     $('#botonJuego').find('a').click(function(e){
         e.preventDefault();
-        idgame = $('#botonJuego').find('#gameId').text();
         $('#btnGameSelected').text($(this).text());
-    })
+    });
 
     /* send data */
     $('#send').click(function(e){
@@ -24,13 +23,15 @@ $(document).ready(function(){
                 console.log(result);
             },
             data: {
-                gameId: $('#botonJuego').find('#gameId').text(),
+                title: $('#tittle').val(),
+                gameId: $('#btnGameSelected').text().match(/\d/g).join(""),
                 review: $('.text-area').val()
             },
             success: result => {
-                console.log(result);
+                alert(result);
+                window.location = '/review/all';
             },
-        })
+        });
     })
 });
 

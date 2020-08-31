@@ -3,7 +3,8 @@ var router = express.Router();
 const userController = require("../controllers/user.controllers");
 const controller = require("../controllers/review.controllers");
 
-router.get('/', controller.findAll);
+
+router.get('/all', controller.showAll);
 
 router.post('/', userController.isAuthenticated, controller.newReview);
 

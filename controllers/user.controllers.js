@@ -1,6 +1,8 @@
 const db = require("../models");
 const app = require("../app");
 const User = db.User;
+const Review = db.Review;
+const Games = db.Games;
 const Op = db.Sequelize.Op;
 
 /* Routes */
@@ -13,14 +15,33 @@ exports.showLogin = (req, res) => {
     res.render('user/login');
 };
 
+exports.showProfileById = async (req, res) => {
+    const accountId = req.params.id;
+    const account = await this.findAccountById(accountId);
+    const accountReviews = await getUserReviews(accountId);
+    res.render('user/publicProfile', { account, accountReviews });
+}
+
+
 exports.showProfile = async (req, res) => {
     const account = req.user;
-    res.render('user/profile', { account });
+    const accountReviews = await getUserReviews(account.id);
+    res.render('user/profile', { account, accountReviews });
 }
 
 exports.showEditProfile = async (req, res) => {
     const account = req.user;
     res.render('user/edit', { account });
+}
+
+exports.verifyProfile = (req, res, next) => {
+    if(req.isAuthenticated()){
+        if(req.user.id == req.params.id)
+            res.redirect('/user/profile');
+        else
+            return next();
+    }else
+        return next();
 }
 
 exports.isAuthenticated = (req, res, next) => {
@@ -33,7 +54,8 @@ exports.isAuthenticated = (req, res, next) => {
 
 exports.findAccountById = async (id) => {
     return await User.findOne({ where: 
-        { id : id } 
+        { id : id },
+        raw: true
     });
 }
 
@@ -93,3 +115,27 @@ exports.editProfile = async (req, res) => {
     
     res.sendStatus(200);
 };
+
+async function getUserReviews(_id){
+    return await Review.findAll({
+        raw: true,
+        nest: true,
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        include: [
+            {
+                model: User,
+                as: "users",
+                where: {
+                    id : _id
+                }
+            },
+            {
+                model: Games,
+                as: "games",
+                attributes: ['id', 'name', 'image']
+            }
+        ]
+    });
+}

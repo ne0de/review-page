@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
             release: Sequelize.DATE,
             genre: Sequelize.STRING,
             languague: Sequelize.STRING,
-            coop: Sequelize.BOOLEAN,
+            multiplayer: Sequelize.BOOLEAN,
             description: Sequelize.TEXT,
             likes: {
                 type: Sequelize.INTEGER,
@@ -30,3 +30,7 @@ module.exports = (sequelize, Sequelize) => {
   return Games;
 };
 //2020-08-18 13:28:02
+
+
+
+
