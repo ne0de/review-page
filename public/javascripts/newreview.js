@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
     $(".text-area").attr("maxlength", 500)
+    $("#tittle").attr("maxlength", 24)
 
     $('.text-area').bind('input propertychange', function() {
         $('#maxChars').text($(this).val().length + '/500');

@@ -47,6 +47,4 @@ db.Review.belongsToMany(db.Games, {
 });
 
 
-
-
 module.exports = db;
