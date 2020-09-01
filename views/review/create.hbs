@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="/stylesheets/newReview.css">
 <script src="/javascripts/newreview.js"></script>
-
-<div class="d-flex flex-column">
-
+<!---->
+<script> var submitted = false; </script>
+<form id="main" class="d-flex flex-column" action="/review" method="POST" onsubmit="if(submitted) return false; submitted = true; return true">
     <div class="p-3">
         <h1 class="display-4 text-white text-center pb-3">Crea tu propia reseña</h1>
         <p class="display-7 text-muted text-center">
@@ -10,40 +10,40 @@
             todos los usuarios de la comunidad. <br />
             Acordate que puedes remover la reseña.
         </p>
+    </div>
 
-        <form class="container pb-3" style="width: 30%;">
-            <div class="form-group mt-4 text-center">
-                <label class="text-muted">Escribe el titulo</label>
-                <input type="text" class="text-center form-control bg-transparent text-white border border-primary"
-                    id="tittle">
-            </div>
-        </form>
+    <div class="form-group container text-center pb-4" style="width: 30%;">
+        <label class="text-muted text-center pb-2">Escribe el titulo</label>
+        <input id="titleArea" type="text" class="text-center form-control bg-transparent text-white border border-primary" name="title">
+    </div>
 
-        <div class="p-1 w-100">
-            <div class="form-group w-100 d-flex justify-content-center">
-                <textarea class="text-area" placeholder="¿Qué opinas del juego?"></textarea>
-            </div>
-            <p class="display-7 text-muted text-center">Carácteres actuales <span id="maxChars"> 0/500</span> </p>
-        </div>
+    <div class="form-group d-flex justify-content-center">
+        <textarea name="review" class="text-area" placeholder="¿Qué opinas del juego?"></textarea>
+    </div>
 
-        <div id="botonJuego" class="d-flex justify-content-xl-end" style="width: 90%;">
-            <button id="btnGameSelected" class="btn bg-transparent text-white dropdown-toggle bg-primary" type="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Selecciona el juego
-            </button>
-            <div id="listaJuegos" class="dropdown-menu scrollable-menu bg-transparent border border-primary ml-2">
-                {{#each games}}
-                <a class="dropdown-item text-white" href=""><img class="mr-3" src="{{dataValues.image}}" srcset=""
-                        width="30px" height="30px"> <span hidden>{{dataValues.id}}</span> {{dataValues.name}}</a>
-                {{/each}}
-            </div>
+    <div class="container" style="width: 80%">
+        <p class="display-7 text-muted text-left">Carácteres actuales <span id="maxChars"> 0/500</span> </p>
+    </div>
+
+    <div class="form-group container text-center" style="width: 30%;">
+        <label class="text-muted text-center">Nombre del juego</label>
+    </div>
+    
+    <div class="form-group container d-flex justify-content-center pb-5" style="width: 30%;">
+        <input type="text" id="gameName" class="text-center form-control bg-transparent text-white border border-primary" name="gameName">
+        <button id="btnGameSelected" name="gameId" class="btn bg-transparent text-white dropdown-toggle bg-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Ver</button>
+        <div id="listaJuegos" class="dropdown-menu scrollable-menu bg-primary border border-primary">
+            {{#each games}}
+                <a class="dropdown-item text-white" href=""><img class="mr-3" src="{{dataValues.image}}" srcset="" width="30px" height="30px">{{dataValues.name}}</a>
+            {{/each}}
         </div>
     </div>
 
-    <div class="" style="margin-bottom: 10%; margin-top: 5%;">
-        <div class="d-flex justify-content-center">
-            <button id="send" class="btn btn-primary border border-primary text-white mr-3"
-                type="button">Publicar</button>
+    <div class="form-group container text-center d-flex justify-content-center" style="">
+        <button id="send" class="btn btn-primary border border-primary text-white" type="submit">Publicar</button>
+        <div class="pl-4">
             <button class="btn btn-danger text-white" onClick="window.location='/';" type="button">Cancelar</button>
         </div>
     </div>
-</div>
+
+</form>
