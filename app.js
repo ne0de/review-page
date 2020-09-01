@@ -45,12 +45,8 @@ app.use(passport.session());
 app.use(flash());
 
 app.use((req, res, next) => {
-    res.locals.messageSuccess = req.flash('messageSuccess')
-    res.locals.messageFailure = req.flash('messageFailure')
-    next();
-})
-
-app.use((req, res, next) => {
+    res.locals.messageSuccess = req.flash('messageSuccess');
+    res.locals.messageFailure = req.flash('messageFailure');
     res.locals.login = req.isAuthenticated();
     if(req.isAuthenticated())
         res.locals.nickname = req.user.nickname;

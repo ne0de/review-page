@@ -6,7 +6,7 @@ const controller = require("../controllers/review.controllers");
 
 router.get('/all', controller.showAll);
 
-router.post('/', userController.isAuthenticated, controller.newReview);
+router.post('/', userController.isAuthenticated, controller.createReview);
 
 router.get('/create', userController.isAuthenticated, controller.showCreate);
 

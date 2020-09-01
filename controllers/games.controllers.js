@@ -1,6 +1,8 @@
 const db = require("../models");
 const Games = db.Games;
 
+/* Routes */
+
 exports.showCreate = (req, res) => {
     res.render('games/insert');
 }
@@ -19,3 +21,13 @@ exports.findAll = async (req, res) => {
         response: query.games
     });
 };
+
+/* Database */
+
+exports.findGameByName = async (gameName) => {
+    return await Games.findOne({ where: 
+        { name : gameName } 
+    });
+}
+
+

@@ -1,8 +1,7 @@
 const db = require("../models");
-const app = require("../app");
+const reviewController = require('./review.controllers');
+
 const User = db.User;
-const Review = db.Review;
-const Games = db.Games;
 const Op = db.Sequelize.Op;
 
 /* Routes */
@@ -18,14 +17,14 @@ exports.showLogin = (req, res) => {
 exports.showProfileById = async (req, res) => {
     const accountId = req.params.id;
     const account = await this.findAccountById(accountId);
-    const accountReviews = await getUserReviews(accountId);
+    const accountReviews = await reviewController.findAllUserReviews(accountId);
     res.render('user/publicProfile', { account, accountReviews });
 }
 
 
 exports.showProfile = async (req, res) => {
     const account = req.user;
-    const accountReviews = await getUserReviews(account.id);
+    const accountReviews = await reviewController.findAllUserReviews(account.id);
     res.render('user/profile', { account, accountReviews });
 }
 
@@ -43,50 +42,6 @@ exports.verifyProfile = (req, res, next) => {
     }else
         return next();
 }
-
-exports.isAuthenticated = (req, res, next) => {
-    if(req.isAuthenticated())
-        return next();
-    res.redirect('/');
-}
-
-/* Database */
-
-exports.findAccountById = async (id) => {
-    return await User.findOne({ where: 
-        { id : id },
-        raw: true
-    });
-}
-
-exports.findAccountByNick = async (nickname) => {
-    return await User.findOne({ where: 
-        { nickname : nickname } 
-    });
-}
-
-exports.createAccount = async (values) => {
-    return newUser = await User.create({ 
-        name: values.name,
-        surname: values.surname,
-        nickname: values.nickname,
-        password: values.password,
-        email: values.email,
-        description: values.description
-    });
-}
-
-exports.existAccount = async (account) => {
-    return await User.findOne({
-        limit: 1,
-        where: { 
-            [Op.or]: [
-                { nickname: account.nickname },
-                { email: account.email }
-            ]
-        }
-    });
-};
 
 exports.editProfile = async (req, res) => {
     const account = req.user;
@@ -116,26 +71,46 @@ exports.editProfile = async (req, res) => {
     res.sendStatus(200);
 };
 
-async function getUserReviews(_id){
-    return await Review.findAll({
-        raw: true,
-        nest: true,
-        order: [
-            ['createdAt', 'DESC']
-        ],
-        include: [
-            {
-                model: User,
-                as: "users",
-                where: {
-                    id : _id
-                }
-            },
-            {
-                model: Games,
-                as: "games",
-                attributes: ['id', 'name', 'image']
-            }
-        ]
+exports.isAuthenticated = (req, res, next) => {
+    if(req.isAuthenticated())
+        return next();
+    res.redirect('/');
+}
+
+/* Database */
+
+exports.createAccount = async (values) => {
+    return newUser = await User.create({ 
+        name: values.name,
+        surname: values.surname,
+        nickname: values.nickname,
+        password: values.password,
+        email: values.email,
+        description: values.description
+    });
+}
+
+exports.existAccount = async (account) => {
+    return await User.findOne({
+        limit: 1,
+        where: { 
+            [Op.or]: [
+                { nickname: account.nickname },
+                { email: account.email }
+            ]
+        }
+    });
+};
+
+exports.findAccountById = async (_id) => {
+    return await User.findOne({ where: 
+        { id : _id },
+        raw: true
+    });
+}
+
+exports.findAccountByNick = async (_nickname) => {
+    return await User.findOne({ where: 
+        { nickname : _nickname } 
     });
 }
