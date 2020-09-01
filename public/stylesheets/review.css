@@ -1,0 +1,23 @@
+#avatar {
+	transition: 1s ease;
+}
+
+#avatar:hover {
+	-webkit-transform: scale(1.8);
+	-ms-transform: scale(1.8);
+	transform: scale(1.8);
+	transition: 1s ease;
+}
+
+#gameImage {
+	-webkit-filter: brightness(80%);
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+#gameImage:hover {
+	-webkit-filter: brightness(100%);
+}

@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
             nickname: Sequelize.STRING,
             password: Sequelize.STRING,
             email: Sequelize.STRING,
-            description: Sequelize.STRING,
+            description: Sequelize.TEXT('long'),
             avatar: {
                 type: Sequelize.STRING,
                 defaultValue: "https://uechantal.edu.ec/assets/img/avatar.png"   

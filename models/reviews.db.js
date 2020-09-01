@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
                 autoIncrement: true,
             },
             title: Sequelize.STRING,
-            description: Sequelize.STRING,
+            description: Sequelize.TEXT('long'),
             likes: {
                 type: Sequelize.INTEGER,
                 defaultValue: 0

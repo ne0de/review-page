@@ -9,9 +9,20 @@ const GameReview = db.GameReview;
 
 /* Routes */
 
+
+exports.showSolo = async (req, res) => { 
+    const targetId = req.params.id;
+    const review = await this.findById(targetId);
+
+    console.log(review);
+
+    return res.render('review/solo', {review} );
+};
+
 exports.showCreate = async (req, res) => {
     const games = await Games.findAll();
-    res.render('review/create', { games } );
+    console.log("aca")
+    return res.render('review/create', { games } );
 }
 
 exports.showAll = async (req, res) => { 
@@ -19,12 +30,13 @@ exports.showAll = async (req, res) => {
     res.render('review/all', {allReviews});
 };
 
+
 exports.createReview = async (req, res) => {
     const account = req.user;
     const values = req.body;
     const gameTarget = await gamesController.findGameByName(values.gameName)
 
-    if(values.title.length == 0 || values.review.length == 0|| values.gameName.length == 0){
+    if(values.title.length == 0 || values.description.length == 0|| values.gameName.length == 0){
         req.flash('messageFailure', "Rellena todos los campos");
         return res.redirect(301, "/review/create");
     }
@@ -33,8 +45,10 @@ exports.createReview = async (req, res) => {
         req.flash('messageFailure', "El juego que introduciste no existe en nuestro registro de juegos.");
         return res.redirect(301, "/review/create");
     }
+
     
     const newReview = await this.newReview(values.title, values.description);
+    console.log(newReview.description);
     await this.newUserReview(account.id, newReview.id);
     await this.newGameReview(gameTarget.id, newReview.id);
 
@@ -64,6 +78,27 @@ exports.newGameReview = async (_gameId, _reviewId) => {
     return await GameReview.create({
         gameId: _gameId,
         reviewId: _reviewId
+    });
+}
+
+exports.findById = async (_id) => {
+    return await Review.findOne({
+        raw: true,
+        nest: true,
+        where: {
+            id: _id
+        },
+        include: [
+            {
+                model: User,
+                as: "users",
+            },
+            {
+                model: Games,
+                as: "games",
+                attributes: ['id', 'name', 'image']
+            }
+        ]
     });
 }
 
