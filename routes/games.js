@@ -6,5 +6,4 @@ router.post('/', controller.addGame);
 
 router.get('/insert', controller.showCreate);
 
-
 module.exports = router;
