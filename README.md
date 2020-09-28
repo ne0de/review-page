@@ -1,3 +1,3 @@
-# A simple web page of reviews
+# A simple web page of reviews.
 
 - npm install
