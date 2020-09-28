@@ -19,6 +19,7 @@ db.Games = require("./games.db")(sequelize, Sequelize);
 
 db.UserReview = require("./userReviews.db")(sequelize, Sequelize);
 db.GameReview = require("./gameReview.db")(sequelize, Sequelize);
+db.RateReview = require("./rateReviews.db")(sequelize, Sequelize);
 
 /* User <-> Review relation */
 db.User.belongsToMany(db.Review, {
@@ -45,6 +46,5 @@ db.Review.belongsToMany(db.Games, {
     as: "games",
     foreignKey: "reviewId",
 });
-
 
 module.exports = db;

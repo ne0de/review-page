@@ -30,6 +30,17 @@ exports.showAll = async (req, res) => {
     res.render('review/all', {allReviews});
 };
 
+exports.addLike = async (req, res) => {
+    var idreview = req.params.idreview
+    var currentReview = await this.findById(idreview)
+    var currentLike = currentReview.likes + 1
+    await Review.update({
+            likes: currentLike
+        },{
+            where: {id: idreview}
+    })
+    res.redirect(req.get('referer'));
+}
 
 exports.createReview = async (req, res) => {
     const account = req.user;
@@ -57,6 +68,8 @@ exports.createReview = async (req, res) => {
 }
 
 /* Database */
+
+
 
 exports.newReview = async (_title, _description) => {
     return await Review.create({ 
