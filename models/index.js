@@ -46,5 +46,4 @@ db.Review.belongsToMany(db.Games, {
     foreignKey: "reviewId",
 });
 
-
 module.exports = db;

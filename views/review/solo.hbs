@@ -40,7 +40,7 @@
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <button onClick="" onClick=""
+                        <button onClick="window.location='/review/like/{{review.id}}'" onClick=""
                             class="btn btn-outline-success d-flex justify-content-end">{{review.likes}}
                             <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-hand-thumbs-up"
                                 fill="green" xmlns="http://www.w3.org/2000/svg">
@@ -66,3 +66,17 @@
 </div>
 
 {{/if}}
+<script>
+    $.ajax({
+        url: 'http://localhost:3000/user/',
+        type: 'POST',
+        data: newUser,
+        error: result => {
+            alert(result.responseText);
+        },
+        success: result => {
+            alert(result);
+            window.location = '/user/login';
+        }
+    });
+</script>

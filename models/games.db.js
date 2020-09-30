@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize) => {
                 defaultValue: 0
             },
             image: {
-                type: Sequelize.STRING,
+                type: Sequelize.TEXT,
                 defaultValue: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_568656.png&f=1&nofb=1"   
             }
         }
