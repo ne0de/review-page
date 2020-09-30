@@ -10,4 +10,8 @@ router.get('/faq', function(req, res, next) {
   res.render('faq');
 });
 
+router.get('/contact', function(req, res, next) {
+  res.render('contact');
+});
+
 module.exports = router;
