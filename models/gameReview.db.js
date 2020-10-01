@@ -1,4 +1,4 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
     const GameReview = sequelize.define("game_review",
         {   },
         {

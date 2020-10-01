@@ -6,19 +6,23 @@ const sequelize = new Sequelize(
     {
         host: dbConfig.HOST,
         dialect: dbConfig.DIALECT
-    });
+    }
+);
 
 const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.User = require("./users.db")(sequelize, Sequelize);
-db.Review = require("./reviews.db")(sequelize, Sequelize);
-db.Games = require("./games.db")(sequelize, Sequelize);
+/* Tables */
+db.User = require("./users.db") (sequelize, Sequelize);
+db.Games = require("./games.db") (sequelize, Sequelize);
+db.Review = require("./reviews.db") (sequelize, Sequelize);
 
-db.UserReview = require("./userReviews.db")(sequelize, Sequelize);
-db.GameReview = require("./gameReview.db")(sequelize, Sequelize);
+/* Intermediate tables */
+db.UserReview = require("./userReviews.db") (sequelize, Sequelize);
+db.GameReview = require("./gameReview.db") (sequelize, Sequelize);
+db.rateReview = require("./rateReview.db") (sequelize, Sequelize);
 
 /* User <-> Review relation */
 db.User.belongsToMany(db.Review, {
@@ -43,6 +47,19 @@ db.Games.belongsToMany(db.Review, {
 db.Review.belongsToMany(db.Games, {
     through: db.GameReview,
     as: "games",
+    foreignKey: "reviewId",
+});
+
+/* User <-> Rate review relation */
+db.User.belongsToMany(db.Review, {
+    through: db.rateReview,
+    as: "reviews_rate",
+    foreignKey: "userId",
+});
+  
+db.Review.belongsToMany(db.User, {
+    through: db.rateReview,
+    as: "users_rate",
     foreignKey: "reviewId",
 });
 

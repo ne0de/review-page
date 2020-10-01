@@ -18,14 +18,20 @@ exports.showProfileById = async (req, res) => {
     const accountId = req.params.id;
     const account = await this.findAccountById(accountId);
     const accountReviews = await reviewController.findAllUserReviews(accountId);
-    res.render('user/publicProfile', { account, accountReviews });
+    var likeReviews = await reviewController.findAllUserRate(account.id, 'like');
+    if (likeReviews[0].reviews_rate.id == null) 
+        likeReviews = [];
+    res.render('user/publicProfile', { account, accountReviews, likeReviews });
 }
 
 
 exports.showProfile = async (req, res) => {
     const account = req.user;
     const accountReviews = await reviewController.findAllUserReviews(account.id);
-    res.render('user/profile', { account, accountReviews });
+    var likeReviews = await reviewController.findAllUserRate(account.id, 'like');
+    if (likeReviews[0].reviews_rate.id == null) 
+        likeReviews = [];
+    res.render('user/profile', { account, accountReviews, likeReviews });
 }
 
 exports.showEditProfile = async (req, res) => {
@@ -34,45 +40,45 @@ exports.showEditProfile = async (req, res) => {
 }
 
 exports.verifyProfile = (req, res, next) => {
-    if(req.isAuthenticated()){
-        if(req.user.id == req.params.id)
+    if (req.isAuthenticated()) {
+        if (req.user.id == req.params.id)
             res.redirect('/user/profile');
         else
             return next();
-    }else
+    } else
         return next();
 }
 
 exports.editProfile = async (req, res) => {
     const account = req.user;
     const newValues = req.body;
-    
-    if(!newValues.name)
+
+    if (!newValues.name)
         newValues.name = account.name;
 
-    if(!newValues.surname)
+    if (!newValues.surname)
         newValues.surname = account.surname;
-    
-    if(!newValues.description)
+
+    if (!newValues.description)
         newValues.description = account.description;
 
-    if(!newValues.avatar)
+    if (!newValues.avatar)
         newValues.avatar = account.avatar;
-    
-    await User.update({ 
+
+    await User.update({
         name: newValues.name,
         surname: newValues.surname,
         description: newValues.description,
         avatar: newValues.avatar
-    },{
-        where: {id: account.id}
+    }, {
+        where: { id: account.id }
     });
-    
+
     res.sendStatus(200);
 };
 
 exports.isAuthenticated = (req, res, next) => {
-    if(req.isAuthenticated())
+    if (req.isAuthenticated())
         return next();
     res.redirect('/');
 }
@@ -80,7 +86,7 @@ exports.isAuthenticated = (req, res, next) => {
 /* Database */
 
 exports.createAccount = async (values) => {
-    return newUser = await User.create({ 
+    return newUser = await User.create({
         name: values.name,
         surname: values.surname,
         nickname: values.nickname,
@@ -93,7 +99,7 @@ exports.createAccount = async (values) => {
 exports.existAccount = async (account) => {
     return await User.findOne({
         limit: 1,
-        where: { 
+        where: {
             [Op.or]: [
                 { nickname: account.nickname },
                 { email: account.email }
@@ -103,14 +109,17 @@ exports.existAccount = async (account) => {
 };
 
 exports.findAccountById = async (_id) => {
-    return await User.findOne({ where: 
-        { id : _id },
+    return await User.findOne({
+        where: {
+            id: _id
+        },
         raw: true
     });
 }
 
 exports.findAccountByNick = async (_nickname) => {
-    return await User.findOne({ where: 
-        { nickname : _nickname } 
+    return await User.findOne({
+        where:
+            { nickname: _nickname }
     });
 }

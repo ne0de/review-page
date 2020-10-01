@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
             },
             title: Sequelize.STRING,
             description: Sequelize.TEXT('long'),
+            views: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0
+            },
             likes: {
                 type: Sequelize.INTEGER,
                 defaultValue: 0

@@ -7,8 +7,6 @@ exports.mostrarTodo = async (req, res) => {
         raw: true,
         nest: true
     });
-
-    console.log(allGames);
     res.render('games/all', {allGames});
 }
 
@@ -19,7 +17,7 @@ exports.showCreate = (req, res) => {
 exports.addGame = async (req, res) => {
     var game = req.body;
     await Games.create(game);
-    console.log(game)
+
     res.send("Juego agregado satisfactoriamente");
 }
 

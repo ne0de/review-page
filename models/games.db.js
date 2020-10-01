@@ -29,6 +29,7 @@ module.exports = (sequelize, Sequelize) => {
     );
   return Games;
 };
+
 //2020-08-18 13:28:02
 
 
