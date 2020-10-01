@@ -14,4 +14,10 @@ router.get('/contact', function(req, res, next) {
   res.render('contact');
 });
 
+router.get('/term', function(req, res, next) {
+  res.render('term');
+});
+
+
+
 module.exports = router;
